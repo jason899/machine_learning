@@ -1,0 +1,11 @@
+ 1 from numpy import hstack, vstack, array, median, nan
+ 2 from numpy.random import choice
+ 3 from sklearn.datasets import load_iris
+ 4 
+ 5 #特征矩阵加工
+ 6 #使用vstack增加一行含缺失值的样本(nan, nan, nan, nan)
+ 7 #使用hstack增加一列表示花的颜色（0-白、1-黄、2-红），花的颜色是随机的，意味着颜色并不影响花的分类
+ 8 iris.data = hstack((choice([0, 1, 2], size=iris.data.shape[0]+1).reshape(-1,1), vstack((iris.data, array([nan, nan, nan, nan]).reshape(1,-1)))))
+ 9 #目标值向量加工
+10 #增加一个目标值，对应含缺失值的样本，值为众数
+11 iris.target = hstack((iris.target, array([median(iris.target)])))
